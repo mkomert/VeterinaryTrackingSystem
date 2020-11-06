@@ -1,0 +1,43 @@
+﻿@using WebApplication2.Models;
+@model List<animalDB>
+
+@{
+    ViewBag.Title = "Hasta Seçim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/scripts/tableStyle.css" rel="stylesheet" />
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Table Style</title>
+    <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+</head>
+
+<body>
+    <div class="table-title">
+
+        <div align="center"> <img src="~/images/Icon64.png" /></div>
+        
+    </div>
+    <table class="table-fill">
+        <thead>
+            <tr>
+                <th class="text-left">Hasta Adı</th>
+                <th class="text-left">Görüntüle</th>
+            </tr>
+        </thead>
+        <tbody class="table-hover">
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td class="text-left">@item.Adi</td>
+                <td class="text-center" align="center">@Html.ActionLink("Seç", "Show", new { id = item.ID }, new { @class = "my-class" })</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+
+</body>

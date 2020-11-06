@@ -1,0 +1,66 @@
+﻿@model WebApplication2.Models.rememberPw
+@{
+    ViewBag.Title = "Şifremi Unuttum!";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<title>Veteriner Takip Sistemi Giriş</title>
+<!--
+Practice coding based on this:
+https://dribbble.com/shots/1493728-Simple-Login-Page
+-->
+<!--
+Practice coding based on this:
+https://dribbble.com/shots/1493728-Simple-Login-Page
+-->
+
+<html>
+<link href="~/scripts/loginStyle.css" rel="stylesheet" />
+
+
+
+
+<div class="tile">
+    <div class="tile-header">
+
+    </div>
+
+    <div class="tile-body">
+        <form id="form">
+            <label class="form-input">
+                <i class="material-icons">credit_card</i>
+                @Html.TextBoxFor(x => x.Phone, new { placeholder = "Telefon Numarası", @class = "email-area", maxlength = "11" })
+                <span class="label">Telefon Numarası</span>
+                <span class="underline"></span>
+            </label>
+
+            <label class="form-input">
+                <i class="material-icons">email</i>
+                @Html.TextBoxFor(x => x.Email, new { placeholder = "E-Mail", @class = "email-area" })
+                <span class="label">E-Mail</span>
+                <span class="underline"></span>
+            </label>
+
+            <div class="submit-container clearfix" style="margin-top: 2rem;">
+
+
+                <input type="submit" value="Gönder" formaction='@Url.Action("rememberCardIDxD", "Home")' class="btn btn-irenic float-right" tabindex="0" role="button">
+
+                @Html.ActionLink("Ana Sayfa", "Index", "Home", new { @class = "links" })
+
+
+            </div>
+
+
+    </div>
+
+    </form>
+</div>
+</html>
+
+
+
+
+
+

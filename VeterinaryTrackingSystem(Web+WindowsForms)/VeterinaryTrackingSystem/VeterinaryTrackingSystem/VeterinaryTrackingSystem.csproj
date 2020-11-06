@@ -1,0 +1,354 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{99E3A9CD-6595-4129-A23E-2A18511BA846}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VeterinaryTrackingSystem</RootNamespace>
+    <AssemblyName>VeterinaryTrackingSystem</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon48.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.BonusSkins.v19.2" />
+    <Reference Include="DevExpress.Data.v19.2" />
+    <Reference Include="DevExpress.ExpressApp.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Mvvm.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Persistent.Base.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v19.2" />
+    <Reference Include="DevExpress.Sparkline.v19.2.Core" />
+    <Reference Include="DevExpress.Xpo.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v19.2" />
+    <Reference Include="DevExpress.Printing.v19.2.Core" />
+    <Reference Include="DevExpress.XtraGauges.v19.2.Core, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGauges.v19.2.Win, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraNavBar.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraScheduler.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraScheduler.v19.2.Core, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraVerticalGrid.v19.2, Version=19.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="customerUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="customerUpdate.Designer.cs">
+      <DependentUpon>customerUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAnimal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAnimal.Designer.cs">
+      <DependentUpon>frmAnimal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCertificate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCertificate.Designer.cs">
+      <DependentUpon>frmCertificate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCertificateShow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCertificateShow.Designer.cs">
+      <DependentUpon>frmCertificateShow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCustomer.Designer.cs">
+      <DependentUpon>frmCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCustomerDelete.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCustomerDelete.Designer.cs">
+      <DependentUpon>frmCustomerDelete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCustomers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCustomers.Designer.cs">
+      <DependentUpon>frmCustomers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLoading.Designer.cs">
+      <DependentUpon>frmLoading.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmOperationDelete.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOperationDelete.Designer.cs">
+      <DependentUpon>frmOperationDelete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPatientDelete.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPatientDelete.Designer.cs">
+      <DependentUpon>frmPatientDelete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPatientUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPatientUpdate.Designer.cs">
+      <DependentUpon>frmPatientUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSaveOperation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSaveOperation.Designer.cs">
+      <DependentUpon>frmSaveOperation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmUpdateOperations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUpdateOperations.Designer.cs">
+      <DependentUpon>frmUpdateOperations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVaccineAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVaccineAdd.Designer.cs">
+      <DependentUpon>frmVaccineAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVaccineDelete.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVaccineDelete.Designer.cs">
+      <DependentUpon>frmVaccineDelete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVaccineUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVaccineUpdate.Designer.cs">
+      <DependentUpon>frmVaccineUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="veterinaryDBDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>veterinaryDBDataSet.xsd</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="customerUpdate.resx">
+      <DependentUpon>customerUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAnimal.resx">
+      <DependentUpon>frmAnimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCertificate.resx">
+      <DependentUpon>frmCertificate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCertificateShow.resx">
+      <DependentUpon>frmCertificateShow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCustomer.resx">
+      <DependentUpon>frmCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCustomerDelete.resx">
+      <DependentUpon>frmCustomerDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCustomers.resx">
+      <DependentUpon>frmCustomers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLoading.resx">
+      <DependentUpon>frmLoading.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOperationDelete.resx">
+      <DependentUpon>frmOperationDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPatientDelete.resx">
+      <DependentUpon>frmPatientDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPatientUpdate.resx">
+      <DependentUpon>frmPatientUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSaveOperation.resx">
+      <DependentUpon>frmSaveOperation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmUpdateOperations.resx">
+      <DependentUpon>frmUpdateOperations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVaccineAdd.resx">
+      <DependentUpon>frmVaccineAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVaccineDelete.resx">
+      <DependentUpon>frmVaccineDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVaccineUpdate.resx">
+      <DependentUpon>frmVaccineUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="veterinaryDBDataSet.xsc">
+      <DependentUpon>veterinaryDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="veterinaryDBDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>veterinaryDBDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="veterinaryDBDataSet.xss">
+      <DependentUpon>veterinaryDBDataSet.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataLayer\DataLayer.csproj">
+      <Project>{84a91f8a-5339-491d-bb75-350ee1b9d7bb}</Project>
+      <Name>DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Helper\Helper.csproj">
+      <Project>{952ab5ac-0a40-476a-a435-98a61f1a566e}</Project>
+      <Name>Helper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\icon2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\addUsr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\deleteUsr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\updateUsr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\updateUsr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\addUsr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\deleteUsr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\AnimalDelete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\AnimalRegister.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\UpdateAnimal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\upload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\Icon128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\Icon32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\Icon48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\Icon64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon32.ico" />
+    <Content Include="Icon48.ico" />
+    <None Include="Icons\16x16.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

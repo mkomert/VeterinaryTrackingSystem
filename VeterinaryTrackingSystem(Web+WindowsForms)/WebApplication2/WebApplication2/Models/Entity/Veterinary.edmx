@@ -1,0 +1,966 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="veterinaryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Animals">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" />
+          <Property Name="Breed" Type="nchar" MaxLength="50" />
+          <Property Name="Kind" Type="nchar" MaxLength="50" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="Age" Type="int" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Surname" Type="nchar" MaxLength="50" />
+          <Property Name="Address" Type="nchar" MaxLength="200" />
+          <Property Name="Gender" Type="bit" />
+          <Property Name="CardID" Type="nchar" MaxLength="50" />
+          <Property Name="Phone" Type="nchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="OperationCertificates">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="animalID" Type="int" />
+          <Property Name="OperationsID" Type="int" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Operations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="operationName" Type="nchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="30" />
+          <Property Name="password" Type="nchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="VaccinationCertificates">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="animalID" Type="int" />
+          <Property Name="VaccinesID" Type="int" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Vaccines">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vaccineName" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Animals_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Animals" Type="Self.Animals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Animals">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Certificates_Animals">
+          <End Role="Animals" Type="Self.Animals" Multiplicity="0..1" />
+          <End Role="VaccinationCertificates" Type="Self.VaccinationCertificates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animals">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VaccinationCertificates">
+              <PropertyRef Name="animalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OperationCertificates_Animals">
+          <End Role="Animals" Type="Self.Animals" Multiplicity="0..1" />
+          <End Role="OperationCertificates" Type="Self.OperationCertificates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animals">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OperationCertificates">
+              <PropertyRef Name="animalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OperationCertificates_Operations">
+          <End Role="Operations" Type="Self.Operations" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OperationCertificates" Type="Self.OperationCertificates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OperationCertificates">
+              <PropertyRef Name="OperationsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VaccinationCertificates_Vaccines">
+          <End Role="Vaccines" Type="Self.Vaccines" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VaccinationCertificates" Type="Self.VaccinationCertificates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vaccines">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VaccinationCertificates">
+              <PropertyRef Name="VaccinesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="customerUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cardID" Type="nchar" Mode="In" />
+          <Parameter Name="surname" Type="nchar" Mode="In" />
+          <Parameter Name="name" Type="nchar" Mode="In" />
+          <Parameter Name="address" Type="nchar" Mode="In" />
+          <Parameter Name="gender" Type="bit" Mode="In" />
+          <Parameter Name="phone" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="delete_Patient" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="deleteCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cardID" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="deleteOperationCertByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="opCertID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="deleteVaccineCertByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="certID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="getanimalIDandNamewithCardID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_cardID" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="getCertificateByDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="year" Type="int" Mode="In" />
+          <Parameter Name="animalID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getCertificateByMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="year" Type="int" Mode="In" />
+          <Parameter Name="animalID" Type="int" Mode="In" />
+          <Parameter Name="month" Type="char" Mode="In" />
+        </Function>
+        <Function Name="GetCertificateInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_animalID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetCustomerName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cardID" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="getOPCertificateByDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="year" Type="int" Mode="In" />
+          <Parameter Name="animalID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getOPCertificateByMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="year" Type="int" Mode="In" />
+          <Parameter Name="animalID" Type="int" Mode="In" />
+          <Parameter Name="month" Type="char" Mode="In" />
+        </Function>
+        <Function Name="GetUserNamePW" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getVaccineIDbyPatientID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="animalID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="isCardValid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cardID" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="operationCertificateSave" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="patientID" Type="int" Mode="In" />
+          <Parameter Name="operationsID" Type="int" Mode="In" />
+          <Parameter Name="date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="operationDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="operationID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="operationSave" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="operationName" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="operationUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="operationName" Type="nchar" Mode="In" />
+          <Parameter Name="opID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="relationVaccineDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vacID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_GetAnimalIDWithCustomerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_getAnimalNameAndIDWithCardID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CardID" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="sp_getCustomerIDByCardID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CardID" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_saveAnimalByCustomerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="nchar" Mode="In" />
+          <Parameter Name="Breed" Type="nchar" Mode="In" />
+          <Parameter Name="Age" Type="int" Mode="In" />
+          <Parameter Name="Kind" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="sp_saveCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nchar" Mode="In" />
+          <Parameter Name="Surname" Type="nchar" Mode="In" />
+          <Parameter Name="Address" Type="nchar" Mode="In" />
+          <Parameter Name="Gender" Type="bit" Mode="In" />
+          <Parameter Name="CardID" Type="nchar" Mode="In" />
+          <Parameter Name="Phone" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="updatePatientByCustomerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="customerID" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="nchar" Mode="In" />
+          <Parameter Name="Breed" Type="nchar" Mode="In" />
+          <Parameter Name="Kind" Type="nchar" Mode="In" />
+          <Parameter Name="Age" Type="int" Mode="In" />
+        </Function>
+        <Function Name="updatePatientByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="nchar" Mode="In" />
+          <Parameter Name="Breed" Type="nchar" Mode="In" />
+          <Parameter Name="Kind" Type="nchar" Mode="In" />
+          <Parameter Name="Age" Type="int" Mode="In" />
+        </Function>
+        <Function Name="vacCertificateDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="animalID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="vacCertificateSave" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="animalID" Type="int" Mode="In" />
+          <Parameter Name="VaccinesID" Type="int" Mode="In" />
+          <Parameter Name="Date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="vaccineDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="vaccineSave" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vaccineName" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="vaccineUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="vaccineName" Type="nchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="veterinaryDBModelStoreContainer">
+          <EntitySet Name="Animals" EntityType="Self.Animals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OperationCertificates" EntityType="Self.OperationCertificates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operations" EntityType="Self.Operations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VaccinationCertificates" EntityType="Self.VaccinationCertificates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vaccines" EntityType="Self.Vaccines" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Animals_Customers" Association="Self.FK_Animals_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Animals" EntitySet="Animals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Certificates_Animals" Association="Self.FK_Certificates_Animals">
+            <End Role="Animals" EntitySet="Animals" />
+            <End Role="VaccinationCertificates" EntitySet="VaccinationCertificates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OperationCertificates_Animals" Association="Self.FK_OperationCertificates_Animals">
+            <End Role="Animals" EntitySet="Animals" />
+            <End Role="OperationCertificates" EntitySet="OperationCertificates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OperationCertificates_Operations" Association="Self.FK_OperationCertificates_Operations">
+            <End Role="Operations" EntitySet="Operations" />
+            <End Role="OperationCertificates" EntitySet="OperationCertificates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VaccinationCertificates_Vaccines" Association="Self.FK_VaccinationCertificates_Vaccines">
+            <End Role="Vaccines" EntitySet="Vaccines" />
+            <End Role="VaccinationCertificates" EntitySet="VaccinationCertificates" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="veterinaryDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Animals">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Breed" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Kind" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="Age" Type="Int32" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Animals_Customers" FromRole="Animals" ToRole="Customers" />
+          <NavigationProperty Name="VaccinationCertificates" Relationship="Self.FK_Certificates_Animals" FromRole="Animals" ToRole="VaccinationCertificates" />
+          <NavigationProperty Name="OperationCertificates" Relationship="Self.FK_OperationCertificates_Animals" FromRole="Animals" ToRole="OperationCertificates" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="Gender" Type="Boolean" />
+          <Property Name="CardID" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Animals" Relationship="Self.FK_Animals_Customers" FromRole="Customers" ToRole="Animals" />
+        </EntityType>
+        <EntityType Name="OperationCertificates">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="animalID" Type="Int32" />
+          <Property Name="OperationsID" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Animals" Relationship="Self.FK_OperationCertificates_Animals" FromRole="OperationCertificates" ToRole="Animals" />
+          <NavigationProperty Name="Operations" Relationship="Self.FK_OperationCertificates_Operations" FromRole="OperationCertificates" ToRole="Operations" />
+        </EntityType>
+        <EntityType Name="Operations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="operationName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="OperationCertificates" Relationship="Self.FK_OperationCertificates_Operations" FromRole="Operations" ToRole="OperationCertificates" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VaccinationCertificates">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="animalID" Type="Int32" />
+          <Property Name="VaccinesID" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Animals" Relationship="Self.FK_Certificates_Animals" FromRole="VaccinationCertificates" ToRole="Animals" />
+          <NavigationProperty Name="Vaccines" Relationship="Self.FK_VaccinationCertificates_Vaccines" FromRole="VaccinationCertificates" ToRole="Vaccines" />
+        </EntityType>
+        <EntityType Name="Vaccines">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vaccineName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="VaccinationCertificates" Relationship="Self.FK_VaccinationCertificates_Vaccines" FromRole="Vaccines" ToRole="VaccinationCertificates" />
+        </EntityType>
+        <Association Name="FK_Animals_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Animals" Type="Self.Animals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Animals">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Certificates_Animals">
+          <End Role="Animals" Type="Self.Animals" Multiplicity="0..1" />
+          <End Role="VaccinationCertificates" Type="Self.VaccinationCertificates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animals">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VaccinationCertificates">
+              <PropertyRef Name="animalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OperationCertificates_Animals">
+          <End Role="Animals" Type="Self.Animals" Multiplicity="0..1" />
+          <End Role="OperationCertificates" Type="Self.OperationCertificates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animals">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OperationCertificates">
+              <PropertyRef Name="animalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OperationCertificates_Operations">
+          <End Role="Operations" Type="Self.Operations" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OperationCertificates" Type="Self.OperationCertificates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operations">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OperationCertificates">
+              <PropertyRef Name="OperationsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VaccinationCertificates_Vaccines">
+          <End Role="Vaccines" Type="Self.Vaccines" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VaccinationCertificates" Type="Self.VaccinationCertificates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vaccines">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VaccinationCertificates">
+              <PropertyRef Name="VaccinesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="veterinaryDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Animals" EntityType="Self.Animals" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" />
+          <EntitySet Name="OperationCertificates" EntityType="Self.OperationCertificates" />
+          <EntitySet Name="Operations" EntityType="Self.Operations" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="VaccinationCertificates" EntityType="Self.VaccinationCertificates" />
+          <EntitySet Name="Vaccines" EntityType="Self.Vaccines" />
+          <AssociationSet Name="FK_Animals_Customers" Association="Self.FK_Animals_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Animals" EntitySet="Animals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Certificates_Animals" Association="Self.FK_Certificates_Animals">
+            <End Role="Animals" EntitySet="Animals" />
+            <End Role="VaccinationCertificates" EntitySet="VaccinationCertificates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OperationCertificates_Animals" Association="Self.FK_OperationCertificates_Animals">
+            <End Role="Animals" EntitySet="Animals" />
+            <End Role="OperationCertificates" EntitySet="OperationCertificates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OperationCertificates_Operations" Association="Self.FK_OperationCertificates_Operations">
+            <End Role="Operations" EntitySet="Operations" />
+            <End Role="OperationCertificates" EntitySet="OperationCertificates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VaccinationCertificates_Vaccines" Association="Self.FK_VaccinationCertificates_Vaccines">
+            <End Role="Vaccines" EntitySet="Vaccines" />
+            <End Role="VaccinationCertificates" EntitySet="VaccinationCertificates" />
+          </AssociationSet>
+          <FunctionImport Name="getCertificateByDate" ReturnType="Collection(veterinaryDBModel.getCertificateByDate_Result)">
+            <Parameter Name="year" Mode="In" Type="Int32" />
+            <Parameter Name="animalID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getCertificateByMonth" ReturnType="Collection(veterinaryDBModel.getCertificateByMonth_Result)">
+            <Parameter Name="year" Mode="In" Type="Int32" />
+            <Parameter Name="animalID" Mode="In" Type="Int32" />
+            <Parameter Name="month" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetCertificateInfo" ReturnType="Collection(veterinaryDBModel.GetCertificateInfo_Result)">
+          <Parameter Name="p_animalID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getOPCertificateByDate" ReturnType="Collection(veterinaryDBModel.getOPCertificateByDate_Result)">
+            <Parameter Name="year" Mode="In" Type="Int32" />
+            <Parameter Name="animalID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getOPCertificateByMonth" ReturnType="Collection(veterinaryDBModel.getOPCertificateByMonth_Result)">
+            <Parameter Name="year" Mode="In" Type="Int32" />
+            <Parameter Name="animalID" Mode="In" Type="Int32" />
+            <Parameter Name="month" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getVaccineIDbyPatientID" ReturnType="Collection(Int32)">
+          <Parameter Name="animalID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="isCardValid" ReturnType="Collection(veterinaryDBModel.isCardValid_Result)">
+          <Parameter Name="cardID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="operationCertificateSave">
+            <Parameter Name="patientID" Mode="In" Type="Int32" />
+            <Parameter Name="operationsID" Mode="In" Type="Int32" />
+            <Parameter Name="date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="operationDelete">
+          <Parameter Name="operationID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="operationSave">
+          <Parameter Name="operationName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="operationUpdate">
+            <Parameter Name="operationName" Mode="In" Type="String" />
+            <Parameter Name="opID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="relationVaccineDelete">
+          <Parameter Name="vacID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetAnimalIDWithCustomerID" ReturnType="Collection(Int32)">
+          <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getAnimalNameAndIDWithCardID" ReturnType="Collection(String)">
+          <Parameter Name="CardID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getCustomerIDByCardID" ReturnType="Collection(Int32)">
+          <Parameter Name="CardID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(veterinaryDBModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(veterinaryDBModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_saveAnimalByCustomerID">
+            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Breed" Mode="In" Type="String" />
+            <Parameter Name="Age" Mode="In" Type="Int32" />
+            <Parameter Name="Kind" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_saveCustomer">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Surname" Mode="In" Type="String" />
+            <Parameter Name="Address" Mode="In" Type="String" />
+            <Parameter Name="Gender" Mode="In" Type="Boolean" />
+            <Parameter Name="CardID" Mode="In" Type="String" />
+            <Parameter Name="Phone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="vacCertificateSave">
+            <Parameter Name="animalID" Mode="In" Type="Int32" />
+            <Parameter Name="VaccinesID" Mode="In" Type="Int32" />
+            <Parameter Name="Date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="customerUpdate">
+            <Parameter Name="cardID" Mode="In" Type="String" />
+            <Parameter Name="surname" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="address" Mode="In" Type="String" />
+            <Parameter Name="gender" Mode="In" Type="Boolean" />
+            <Parameter Name="phone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="delete_Patient">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="deleteCustomer">
+          <Parameter Name="cardID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="deleteOperationCertByID">
+          <Parameter Name="opCertID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="deleteVaccineCertByID">
+          <Parameter Name="certID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetCustomerName" ReturnType="Collection(String)">
+          <Parameter Name="cardID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetUserNamePW" ReturnType="Collection(veterinaryDBModel.GetUserNamePW_Result)" />
+          <FunctionImport Name="updatePatientByCustomerID">
+            <Parameter Name="customerID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Breed" Mode="In" Type="String" />
+            <Parameter Name="Kind" Mode="In" Type="String" />
+            <Parameter Name="Age" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="updatePatientByID">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Breed" Mode="In" Type="String" />
+            <Parameter Name="Kind" Mode="In" Type="String" />
+            <Parameter Name="Age" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="vacCertificateDelete">
+          <Parameter Name="animalID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="vaccineDelete">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="vaccineSave">
+          <Parameter Name="vaccineName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="vaccineUpdate">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="vaccineName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getanimalIDandNamewithCardID" ReturnType="Collection(veterinaryDBModel.getanimalIDandNamewithCardID_Result)">
+          <Parameter Name="p_cardID" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="getCertificateByDate_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="animalID" Nullable="true" />
+          <Property Type="Int32" Name="VaccinesID" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="getCertificateByMonth_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="animalID" Nullable="true" />
+          <Property Type="Int32" Name="VaccinesID" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetCertificateInfo_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="VaccinesID" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="getOPCertificateByDate_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="animalID" Nullable="true" />
+          <Property Type="Int32" Name="OperationsID" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="getOPCertificateByMonth_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="animalID" Nullable="true" />
+          <Property Type="Int32" Name="OperationsID" Nullable="true" />
+          <Property Type="DateTime" Name="Date" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="isCardValid_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Surname" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="200" />
+          <Property Type="Boolean" Name="Gender" Nullable="true" />
+          <Property Type="String" Name="CardID" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetUserNamePW_Result">
+          <Property Type="String" Name="name" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="password" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="getanimalIDandNamewithCardID_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="veterinaryDBModelStoreContainer" CdmEntityContainer="veterinaryDBEntities">
+          <EntitySetMapping Name="Animals">
+            <EntityTypeMapping TypeName="veterinaryDBModel.Animals">
+              <MappingFragment StoreEntitySet="Animals">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Breed" ColumnName="Breed" />
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="veterinaryDBModel.Customers">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="CardID" ColumnName="CardID" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OperationCertificates">
+            <EntityTypeMapping TypeName="veterinaryDBModel.OperationCertificates">
+              <MappingFragment StoreEntitySet="OperationCertificates">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="animalID" ColumnName="animalID" />
+                <ScalarProperty Name="OperationsID" ColumnName="OperationsID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operations">
+            <EntityTypeMapping TypeName="veterinaryDBModel.Operations">
+              <MappingFragment StoreEntitySet="Operations">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="operationName" ColumnName="operationName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="veterinaryDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="veterinaryDBModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VaccinationCertificates">
+            <EntityTypeMapping TypeName="veterinaryDBModel.VaccinationCertificates">
+              <MappingFragment StoreEntitySet="VaccinationCertificates">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="animalID" ColumnName="animalID" />
+                <ScalarProperty Name="VaccinesID" ColumnName="VaccinesID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vaccines">
+            <EntityTypeMapping TypeName="veterinaryDBModel.Vaccines">
+              <MappingFragment StoreEntitySet="Vaccines">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="vaccineName" ColumnName="vaccineName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getCertificateByDate" FunctionName="veterinaryDBModel.Store.getCertificateByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="veterinaryDBModel.getCertificateByDate_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="animalID" ColumnName="animalID" />
+                <ScalarProperty Name="VaccinesID" ColumnName="VaccinesID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getCertificateByMonth" FunctionName="veterinaryDBModel.Store.getCertificateByMonth">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="veterinaryDBModel.getCertificateByMonth_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="animalID" ColumnName="animalID" />
+                <ScalarProperty Name="VaccinesID" ColumnName="VaccinesID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCertificateInfo" FunctionName="veterinaryDBModel.Store.GetCertificateInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="veterinaryDBModel.GetCertificateInfo_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="VaccinesID" ColumnName="VaccinesID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getOPCertificateByDate" FunctionName="veterinaryDBModel.Store.getOPCertificateByDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="veterinaryDBModel.getOPCertificateByDate_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="animalID" ColumnName="animalID" />
+                <ScalarProperty Name="OperationsID" ColumnName="OperationsID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getOPCertificateByMonth" FunctionName="veterinaryDBModel.Store.getOPCertificateByMonth">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="veterinaryDBModel.getOPCertificateByMonth_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="animalID" ColumnName="animalID" />
+                <ScalarProperty Name="OperationsID" ColumnName="OperationsID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getVaccineIDbyPatientID" FunctionName="veterinaryDBModel.Store.getVaccineIDbyPatientID" />
+          <FunctionImportMapping FunctionImportName="isCardValid" FunctionName="veterinaryDBModel.Store.isCardValid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="veterinaryDBModel.isCardValid_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="CardID" ColumnName="CardID" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="operationCertificateSave" FunctionName="veterinaryDBModel.Store.operationCertificateSave" />
+          <FunctionImportMapping FunctionImportName="operationDelete" FunctionName="veterinaryDBModel.Store.operationDelete" />
+          <FunctionImportMapping FunctionImportName="operationSave" FunctionName="veterinaryDBModel.Store.operationSave" />
+          <FunctionImportMapping FunctionImportName="operationUpdate" FunctionName="veterinaryDBModel.Store.operationUpdate" />
+          <FunctionImportMapping FunctionImportName="relationVaccineDelete" FunctionName="veterinaryDBModel.Store.relationVaccineDelete" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="veterinaryDBModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="veterinaryDBModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="veterinaryDBModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_GetAnimalIDWithCustomerID" FunctionName="veterinaryDBModel.Store.sp_GetAnimalIDWithCustomerID" />
+          <FunctionImportMapping FunctionImportName="sp_getAnimalNameAndIDWithCardID" FunctionName="veterinaryDBModel.Store.sp_getAnimalNameAndIDWithCardID" />
+          <FunctionImportMapping FunctionImportName="sp_getCustomerIDByCardID" FunctionName="veterinaryDBModel.Store.sp_getCustomerIDByCardID" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="veterinaryDBModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="veterinaryDBModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="veterinaryDBModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="veterinaryDBModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="veterinaryDBModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_saveAnimalByCustomerID" FunctionName="veterinaryDBModel.Store.sp_saveAnimalByCustomerID" />
+          <FunctionImportMapping FunctionImportName="sp_saveCustomer" FunctionName="veterinaryDBModel.Store.sp_saveCustomer" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="veterinaryDBModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="vacCertificateSave" FunctionName="veterinaryDBModel.Store.vacCertificateSave" />
+          <FunctionImportMapping FunctionImportName="customerUpdate" FunctionName="veterinaryDBModel.Store.customerUpdate" />
+          <FunctionImportMapping FunctionImportName="delete_Patient" FunctionName="veterinaryDBModel.Store.delete_Patient" />
+          <FunctionImportMapping FunctionImportName="deleteCustomer" FunctionName="veterinaryDBModel.Store.deleteCustomer" />
+          <FunctionImportMapping FunctionImportName="deleteOperationCertByID" FunctionName="veterinaryDBModel.Store.deleteOperationCertByID" />
+          <FunctionImportMapping FunctionImportName="deleteVaccineCertByID" FunctionName="veterinaryDBModel.Store.deleteVaccineCertByID" />
+          <FunctionImportMapping FunctionImportName="GetCustomerName" FunctionName="veterinaryDBModel.Store.GetCustomerName" />
+          <FunctionImportMapping FunctionImportName="GetUserNamePW" FunctionName="veterinaryDBModel.Store.GetUserNamePW">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="veterinaryDBModel.GetUserNamePW_Result">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="updatePatientByCustomerID" FunctionName="veterinaryDBModel.Store.updatePatientByCustomerID" />
+          <FunctionImportMapping FunctionImportName="updatePatientByID" FunctionName="veterinaryDBModel.Store.updatePatientByID" />
+          <FunctionImportMapping FunctionImportName="vacCertificateDelete" FunctionName="veterinaryDBModel.Store.vacCertificateDelete" />
+          <FunctionImportMapping FunctionImportName="vaccineDelete" FunctionName="veterinaryDBModel.Store.vaccineDelete" />
+          <FunctionImportMapping FunctionImportName="vaccineSave" FunctionName="veterinaryDBModel.Store.vaccineSave" />
+          <FunctionImportMapping FunctionImportName="vaccineUpdate" FunctionName="veterinaryDBModel.Store.vaccineUpdate" />
+          <FunctionImportMapping FunctionImportName="getanimalIDandNamewithCardID" FunctionName="veterinaryDBModel.Store.getanimalIDandNamewithCardID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="veterinaryDBModel.getanimalIDandNamewithCardID_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

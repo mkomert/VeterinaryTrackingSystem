@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3ef0ffa41d8540ef87789d5f8b410fdc" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="veterinaryDBModel.Animal" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="veterinaryDBModel.Customer" Width="1.5" PointX="0.75" PointY="3.5" />
+        <EntityTypeShape EntityType="veterinaryDBModel.OperationCertificate" Width="1.5" PointX="5.25" PointY="3.75" />
+        <EntityTypeShape EntityType="veterinaryDBModel.Operation" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="veterinaryDBModel.sysdiagram" Width="1.5" PointX="5.75" PointY="7" />
+        <EntityTypeShape EntityType="veterinaryDBModel.User" Width="1.5" PointX="7.75" PointY="2" />
+        <EntityTypeShape EntityType="veterinaryDBModel.VaccinationCertificate" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="veterinaryDBModel.Vaccine" Width="1.5" PointX="3" PointY="7.125" />
+        <AssociationConnector Association="veterinaryDBModel.FK_Animals_Customers" />
+        <AssociationConnector Association="veterinaryDBModel.FK_Certificates_Animals" />
+        <AssociationConnector Association="veterinaryDBModel.FK_OperationCertificates_Animals" />
+        <AssociationConnector Association="veterinaryDBModel.FK_OperationCertificates_Operations" />
+        <AssociationConnector Association="veterinaryDBModel.FK_VaccinationCertificates_Vaccines1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

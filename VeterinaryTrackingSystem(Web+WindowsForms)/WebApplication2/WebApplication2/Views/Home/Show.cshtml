@@ -1,0 +1,116 @@
+﻿@using WebApplication2.Models;
+@model WebApplication2.Models.HomePageViewModel
+@{
+    ViewBag.Title = "Karne";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/scripts/tableStyle.css" rel="stylesheet" />
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Table Style</title>
+    <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+</head>
+
+
+<body>
+
+    <div class="table-title">
+
+        <div align="center"> <img src="~/images/Icon64.png" /></div>
+
+    </div>
+    @if (Model.vaccineCerts.ToList().Count < 1)
+    {
+        <div align="center"><p style="font-family:'Segoe UI'">Aşı Bilgisi Bulunamadı!</p></div>
+
+    }
+    else
+    {
+
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th class="text-center">Aşı Adı</th>
+                    <th class="text-center">Tarihi</th>
+
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+
+
+                @foreach (var item in Model.vaccineCerts)
+                {
+                    <tr>
+                        <td class="text-center">@item.Adi</td>
+                        <td class="text-center">@item.tarih</td>
+                    </tr>
+
+                }
+
+            </tbody>
+
+
+        </table>
+    }
+
+
+
+
+
+    @if (Model.operationCerts.ToList().Count < 1)
+    {
+        <div align="center"><p style="font-family:'Segoe UI'">Operasyon Bilgisi Bulunamadı!</p></div>
+
+    }
+    else
+    {
+        <div class="table-title">
+
+        </div>
+
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th class="text-center">Operasyon Adı</th>
+                    <th class="text-center">Operasyon Tarihi</th>
+
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+
+
+
+                @foreach (var item2 in Model.operationCerts)
+                {
+
+                    <tr>
+
+                        <td class="text-center">@item2.Adi</td>
+                        <td class="text-center">@item2.tarih</td>
+                    </tr>
+
+                }
+
+
+
+
+            </tbody>
+        </table>
+
+
+    }
+    @if (Model.vaccineCerts.ToList().Count < 1 || Model.operationCerts.ToList().Count < 1)
+    {
+        <div align="center"> @Html.ActionLink("Ana Sayfa", "Index", "Home", new { @class = "my-class" })</div>
+    }
+
+</body>
+
+
+
+
+
+

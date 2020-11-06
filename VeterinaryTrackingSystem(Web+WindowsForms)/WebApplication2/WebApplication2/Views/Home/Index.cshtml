@@ -1,0 +1,69 @@
+﻿@model WebApplication2.Models.Entity.Customers
+
+@{
+    ViewBag.Title = "Giriş";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<title>Veteriner Takip Sistemi Giriş</title>
+<!--
+Practice coding based on this:
+https://dribbble.com/shots/1493728-Simple-Login-Page
+-->
+
+
+
+
+
+<link href="~/scripts/loginStyle.css" rel="stylesheet" />
+
+
+<div class="tile">
+    <div class="tile-header">
+        
+    </div>
+
+    <div class="tile-body">
+        @using (Html.BeginForm("Login", "Home"))
+        {
+            <form id="form">
+                <label class="form-input">
+                    <i class="material-icons">credit_card</i>
+                   
+                    @Html.TextBoxFor(x => x.CardID, new { placeholder = "Kart Numarası", @class = "email-area", maxlength = "10" })
+                    <span class="label">Kart Numarası</span>
+                    <span class="underline"></span>
+                </label>
+
+                <label class="form-input">
+
+
+
+                    <div class="underline"></div>
+                </label>
+
+                
+                <div class="submit-container clearfix" style="margin-top: 2rem;">
+
+                    <input type="submit" value="Giriş" formaction='@Url.Action("Login", "Home")' class="btn btn-irenic float-right" tabindex="0" role="button">
+                    @Html.ActionLink("Unuttum", "rememberCardID", "Home", new { @class = "links" })
+
+
+                    <div class="login-pending">
+                        <div class=spinner>
+                            <span class="dot1"></span>
+                            <span class="dot2"></span>
+                        </div>
+
+                        <div class="login-granted-content">
+                            <i class="material-icons">done</i>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        }
+    </div>
+</div>
+
+<p style="font-size:10px">Developed by Mustafa Mert KARPUZ</p>
